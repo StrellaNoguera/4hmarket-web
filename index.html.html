@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4H Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;0,900;1,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F1EFE4;
+    --bg-alt: #E7E3D4;
+    --card: #FBF9F2;
+    --ink: #1E2A22;
+    --ink-soft: #52604F;
+    --forest: #2F4B3C;
+    --forest-deep: #223A2D;
+    --marigold: #E8A33D;
+    --marigold-deep: #C9821F;
+    --line: rgba(30,42,34,0.14);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #1B1F1A;
+      --bg-alt: #14181300;
+      --card: #232922;
+      --ink: #F1EFE4;
+      --ink-soft: #B9C2B4;
+      --forest: #6FA687;
+      --forest-deep: #8FC1A2;
+      --marigold: #F0B15A;
+      --marigold-deep: #F5C27E;
+      --line: rgba(241,239,228,0.16);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1B1F1A;
+    --bg-alt: #14181300;
+    --card: #232922;
+    --ink: #F1EFE4;
+    --ink-soft: #B9C2B4;
+    --forest: #6FA687;
+    --forest-deep: #8FC1A2;
+    --marigold: #F0B15A;
+    --marigold-deep: #F5C27E;
+    --line: rgba(241,239,228,0.16);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Work Sans', system-ui, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    line-height: 1.55;
+  }
+  h1, h2, h3, .display { font-family: 'Fraunces', Georgia, serif; }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    z-index: 10;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+  .logo { font-family: 'Fraunces', serif; font-weight: 900; font-size: 1.4rem; letter-spacing: -0.01em; }
+  .logo span { color: var(--marigold-deep); }
+  .navlinks { display: flex; gap: 22px; font-size: 0.95rem; color: var(--ink-soft); }
+  .navlinks a { text-decoration: none; }
+  .navlinks a:hover { color: var(--forest); }
+  .btn-wa {
+    background: var(--forest); color: #fff; text-decoration: none;
+    padding: 10px 18px; border-radius: 4px; font-size: 0.92rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  :root:has([data-theme]) .btn-wa {}
+  .btn-wa:hover { background: var(--forest-deep); }
+  @media (max-width: 640px) { .navlinks { display: none; } }
+
+  .hero {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center;
+    padding: 64px 24px 56px;
+  }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-top: 40px; } }
+  .hero h1 { font-size: clamp(2.1rem, 5vw, 3.1rem); font-weight: 700; line-height: 1.08; margin: 0 0 18px; max-width: 14ch; }
+  .hero p { color: var(--ink-soft); font-size: 1.08rem; max-width: 42ch; margin: 0 0 28px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--marigold); color: var(--forest-deep); text-decoration: none;
+    padding: 13px 24px; border-radius: 4px; font-weight: 600; font-size: 0.98rem;
+  }
+  .btn-primary:hover { background: var(--marigold-deep); color: #fff; }
+  .btn-ghost {
+    border: 1px solid var(--line); text-decoration: none; color: var(--ink);
+    padding: 12px 22px; border-radius: 4px; font-size: 0.98rem;
+  }
+
+  .storefront { width: 100%; max-width: 340px; justify-self: center; }
+
+  section { padding: 56px 24px; border-top: 1px solid var(--line); }
+  .section-head { max-width: 56ch; margin-bottom: 32px; }
+  .section-head h2 { font-size: 1.7rem; font-weight: 700; margin: 0 0 10px; }
+  .section-head p { color: var(--ink-soft); margin: 0; }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .cat-card {
+    background: var(--card); border-left: 4px solid var(--cat-color, var(--forest));
+    padding: 20px 18px; border-radius: 3px;
+  }
+  .cat-card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .cat-card p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 700px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-block h3 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; color: var(--forest); }
+  .info-block p { margin: 0 0 4px; color: var(--ink-soft); font-size: 0.98rem; }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 40px 24px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
+  }
+  footer p { margin: 0; color: var(--ink-soft); font-size: 0.88rem; }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">4H <span>Market</span></div>
+    <nav class="navlinks">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn-wa" href="https://wa.me/595991242498?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <div>
+    <h1>Tu despensa de barrio, a un mensaje de distancia</h1>
+    <p>Almacén, bebidas y productos de todos los días en San Vicente. Hacé tu pedido por WhatsApp y lo tenés listo para retirar o te lo acercamos.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://wa.me/595991242498?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      <a class="btn-ghost" href="#catalogo">Ver catálogo</a>
+    </div>
+  </div>
+ <svg class="storefront" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fachada de la tienda 4H Market, pared de ladrillo con vidriera y plantas">
+  <defs>
+    <pattern id="brick" width="40" height="20" patternUnits="userSpaceOnUse">
+      <rect width="40" height="20" fill="#A85C34"/>
+      <rect width="18" height="8" x="0" y="0" fill="#B96B3E" stroke="#8C4A28"/>
+      <rect width="18" height="8" x="20" y="0" fill="#B96B3E" stroke="#8C4A28"/>
+      <rect width="18" height="8" x="10" y="10" fill="#B96B3E" stroke="#8C4A28"/>
+      <rect width="18" height="8" x="30" y="10" fill="#B96B3E" stroke="#8C4A28"/>
+    </pattern>
+  </defs>
+  <rect x="10" y="20" width="300" height="210" fill="url(#brick)"/>
+  <rect x="10" y="4" width="300" height="18" fill="#2B2E2A"/>
+<rect x="30" y="18" width="10" height="14" fill="#8C6239"/>
+<rect x="90" y="18" width="10" height="14" fill="#8C6239"/>
+<rect x="150" y="18" width="10" height="14" fill="#8C6239"/>
+<rect x="210" y="18" width="10" height="14" fill="#8C6239"/>
+<rect x="270" y="18" width="10" height="14" fill="#8C6239"/>
+  <rect x="30" y="140" width="55" height="90" fill="#EDEAE0"/>
+  <rect x="38" y="150" width="39" height="70" fill="#2B2E2A"/>
+  <line x1="57" y1="150" x2="57" y2="220" stroke="#EDEAE0" stroke-width="2"/>
+  <rect x="92" y="150" width="22" height="13" rx="1" fill="#2B2E2A"/>
+<text x="103" y="160" font-family="Work Sans, sans-serif" font-size="8" fill="#F1EFE4" text-anchor="middle">2600</text>
+  <rect x="115" y="110" width="175" height="95" fill="#EDEAE0"/>
+  <rect x="122" y="117" width="161" height="81" fill="#DCE7E4"/>
+  <text x="132" y="150" font-family="Fraunces, serif" font-weight="900" font-size="26" fill="#1E2A22">4H</text>
+  <line x1="132" y1="160" x2="270" y2="160" stroke="#E8A33D" stroke-width="2"/>
+  <text x="132" y="182" font-family="Work Sans, sans-serif" font-size="11" fill="#52604F">almacén · bebidas · snacks</text>
+  <g>
+    <rect x="150" y="222" width="20" height="16" rx="2" fill="#8C7A63"/>
+    <path d="M160 222 q-10 -24 -2 -34 q10 10 2 34 Z" fill="#2F4B3C"/>
+    <rect x="190" y="222" width="20" height="16" rx="2" fill="#8C7A63"/>
+    <path d="M200 222 q-8 -20 0 -30 q8 10 0 30 Z" fill="#3E6650"/>
+    <rect x="230" y="222" width="20" height="16" rx="2" fill="#8C7A63"/>
+    <path d="M240 222 q10 -22 2 -32 q-10 10 -2 32 Z" fill="#2F4B3C"/>
+  </g>
+</svg>
+</section>
+
+<section id="catalogo">
+  <div class="section-head">
+    <h2>Qué encontrás</h2>
+    <p>Un vistazo rápido a las secciones de la tienda. Escribinos por WhatsApp si buscás algo puntual.</p>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card" style="--cat-color:#2F4B3C"><h3>Almacén</h3><p>Arroz, fideos, aceite, conservas y básicos de despensa.</p></div>
+    <div class="cat-card" style="--cat-color:#E8A33D"><h3>Bebidas</h3><p>Gaseosas, jugos, agua y cerveza fría.</p></div>
+    <div class="cat-card" style="--cat-color:#2F4B3C"><h3>Panificados</h3><p>Pan del día, galletitas y facturas.</p></div>
+    <div class="cat-card" style="--cat-color:#E8A33D"><h3>Lácteos</h3><p>Leche, queso, yogur y fiambres.</p></div>
+    <div class="cat-card" style="--cat-color:#2F4B3C"><h3>Limpieza</h3><p>Detergente, jabón en polvo y artículos de higiene.</p></div>
+    <div class="cat-card" style="--cat-color:#E8A33D"><h3>Snacks</h3><p>Golosinas, papas fritas y algo dulce para la tarde.</p></div>
+  </div>
+</section>
+
+<section id="ubicacion">
+  <div class="info-grid">
+    <div class="info-block">
+      <h3>Dónde estamos</h3>
+      <p>Barrio San Vicente, Asunción</p>
+      <p>Sobre centenario 2600, casi mayor arguello,
+frente al colegio Centro Educativo Jesus</p>
+    </div>
+    <div class="info-block">
+      <h3>Horario</h3>
+      <p>Lunes a sábado: 6:30 AM – 21:30 PM</p>
+      <p>Domingo: 8:30 AM  – 20:00 PM</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div>
+    <p>4H Market · San Vicente, Asunción</p>
+  </div>
+  <a class="btn-wa" href="https://wa.me/595991242498?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+</footer>
+
+</body>
+</html>
